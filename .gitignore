@@ -9,9 +9,14 @@ wheels/
 # Virtual environments
 .venv
 venv/
+.venv/
+
+# uv files (keep uv.lock for reproducible installs)
+# uv.lock should be committed
 
 # Generated videos (keep raw.mp4 as sample)
 stab.mp4
+stab_*.mp4
 *.avi
 *.mov
 *.mkv
