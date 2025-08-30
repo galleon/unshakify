@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        uv sync
+        uv pip install -e .
+
+    - name: Run ruff linting
+      run: uv run ruff check .
+
+    - name: Run ruff formatting check
+      run: uv run ruff format --check .
+
+    - name: Test stabilization pipeline
+      run: uv run python main.py
+
+    - name: Verify output files
+      run: |
+        if [ ! -f "stab.mp4" ]; then
+          echo "Error: stabilized video was not created"
+          exit 1
+        fi
+        echo "✅ Stabilization pipeline completed successfully"
+      shell: bash

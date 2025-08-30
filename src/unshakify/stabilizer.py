@@ -54,9 +54,7 @@ class OnlineStabilizer:
             self.prev_gray = gray
             return self._last_output if self._last_output is not None else frame_bgr
 
-        pts_curr, st, err = cv2.calcOpticalFlowPyrLK(
-            self.prev_gray, gray, pts_prev, None
-        )
+        pts_curr, st, err = cv2.calcOpticalFlowPyrLK(self.prev_gray, gray, pts_prev, None)
         if pts_curr is None:
             self.prev_gray = gray
             return self._last_output if self._last_output is not None else frame_bgr
@@ -85,9 +83,7 @@ class OnlineStabilizer:
 
         # Accumulate camera path and compute smoothed path (EMA)
         self.accum += np.array([dx, dy, da], dtype=np.float32)
-        self.smooth_accum = (
-            1.0 - self.alpha
-        ) * self.smooth_accum + self.alpha * self.accum
+        self.smooth_accum = (1.0 - self.alpha) * self.smooth_accum + self.alpha * self.accum
 
         # The transform we need to *apply* is the difference between smoothed and raw
         diff = self.smooth_accum - self.accum

@@ -99,9 +99,7 @@ def measure_latency(
 # ---------- Helper: Estimate per-frame global translation magnitude ----------
 
 
-def _camera_motion_magnitudes(
-    video_path: str, max_frames: int | None = None
-) -> np.ndarray:
+def _camera_motion_magnitudes(video_path: str, max_frames: int | None = None) -> np.ndarray:
     """
     Returns an array of per-step translation magnitudes |(dx,dy)| estimated via
     sparse feature tracking + robust affine (rigid) fit.
@@ -122,9 +120,7 @@ def _camera_motion_magnitudes(
             break
 
         # Good features
-        pts_prev = cv2.goodFeaturesToTrack(
-            prev, maxCorners=500, qualityLevel=0.01, minDistance=8
-        )
+        pts_prev = cv2.goodFeaturesToTrack(prev, maxCorners=500, qualityLevel=0.01, minDistance=8)
         if pts_prev is not None and len(pts_prev) >= 6:
             pts_next, st, err = cv2.calcOpticalFlowPyrLK(prev, frame, pts_prev, None)
             good_prev = pts_prev[st.flatten() == 1]
@@ -149,9 +145,7 @@ def _camera_motion_magnitudes(
 # ---------- Indicator 2: Stability score ----------
 
 
-def stability_score_from_video(
-    video_path: str, max_frames: int | None = None
-) -> float:
+def stability_score_from_video(video_path: str, max_frames: int | None = None) -> float:
     """
     A lower value means smoother video. We return the RMS of per-step translation magnitudes.
     For reporting "improvement", compute:  S_impr = 1 - (S_after / S_before)  (clamped to [0,1]).

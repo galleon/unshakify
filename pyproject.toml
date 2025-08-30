@@ -1,7 +1,7 @@
 [project]
 name = "unshakify"
 version = "0.1.0"
-description = "Add your description here"
+description = "AI-based video stabilization with performance indicators"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -11,5 +11,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=7.0.0",
     "ruff>=0.12.11",
 ]

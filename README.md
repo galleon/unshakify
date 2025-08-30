@@ -189,6 +189,36 @@ powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 pip install uv
 ```
 
+## Code Quality
+
+This project uses `ruff` for fast Python linting and formatting:
+
+```bash
+# Check code quality
+uv run ruff check .
+
+# Auto-fix issues
+uv run ruff check --fix .
+
+# Format code
+uv run ruff format .
+
+# Check formatting without changes
+uv run ruff format --check .
+```
+
+### Pre-commit Workflow
+
+Before committing code, run:
+```bash
+# Format and fix issues
+uv run ruff format .
+uv run ruff check --fix .
+
+# Test the code still works
+uv run python main.py
+```
+
 ## Performance Characteristics
 
 The system is designed for:
@@ -236,8 +266,8 @@ uv run python main.py
 # Add new dependencies
 uv add package-name
 
-# Add development dependencies
-uv add --dev pytest black isort
+# Add development dependencies (ruff is already included)
+uv add --dev pytest
 
 # Update dependencies
 uv sync --upgrade
@@ -247,6 +277,10 @@ uv run --python 3.11 python main.py
 
 # Create production lockfile
 uv lock
+
+# Code quality checks
+uv run ruff check .
+uv run ruff format .
 ```
 
 ## Contributing
@@ -257,7 +291,20 @@ Contributions are welcome! Please feel free to submit issues and enhancement req
 
 1. Fork the repository
 2. Create a feature branch
-3. Set up development environment with `uv sync`
+3. Set up development environment with `uv sync && uv pip install -e .`
 4. Make your changes
-5. Test with `uv run python main.py`
-6. Submit a pull request
+5. Run quality checks: `uv run ruff format . && uv run ruff check --fix .`
+6. Test with `uv run python main.py`
+7. Commit and push your changes
+8. Submit a pull request
+
+## Continuous Integration
+
+The project uses GitHub Actions for automated testing and quality checks:
+
+- **Code Quality**: Runs `ruff` linting and formatting checks
+- **Testing**: Validates the stabilization pipeline with sample video
+- **Multi-platform**: Tests on Linux, macOS, and Windows
+- **Python Versions**: Tests against Python 3.11+
+
+All pull requests must pass these checks before merging.
