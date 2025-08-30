@@ -191,7 +191,7 @@ pip install uv
 
 ## Code Quality
 
-This project uses `ruff` for fast Python linting and formatting:
+This project uses `ruff` for fast Python linting and formatting. All configuration is centralized in `pyproject.toml`:
 
 ```bash
 # Check code quality
@@ -281,6 +281,9 @@ uv lock
 # Code quality checks
 uv run ruff check .
 uv run ruff format .
+
+# Run tests
+uv run pytest test_basic.py
 ```
 
 ## Contributing

@@ -3,6 +3,24 @@ name = "unshakify"
 version = "0.1.0"
 description = "AI-based video stabilization with performance indicators"
 readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Galleon", email = "your.email@example.com"},
+]
+keywords = ["video", "stabilization", "computer-vision", "ai", "opencv"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 requires-python = ">=3.11"
 dependencies = [
     "opencv-python-headless>=4.8.0",
@@ -14,3 +32,55 @@ dev = [
     "pytest>=7.0.0",
     "ruff>=0.12.11",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "RUF", # Ruff-specific rules
+]
+
+ignore = [
+    "UP035", # Import from collections.abc (can be noisy for older code)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"main.py" = ["I001"] # Skip import sorting for demo script
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["unshakify"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = [".", "src"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--verbose",
+    "--tb=short",
+]
+
+[project.urls]
+Homepage = "https://github.com/galleon/unshakify"
+Repository = "https://github.com/galleon/unshakify.git"
+Issues = "https://github.com/galleon/unshakify/issues"
+Documentation = "https://github.com/galleon/unshakify#readme"
